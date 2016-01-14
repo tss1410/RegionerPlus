@@ -3,7 +3,7 @@ package me.tss1410.RegionerPlus.region;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.World;
 
 import me.tss1410.RegionerPlus.RegionerPlus;
@@ -123,6 +123,10 @@ public class Region {
 			return true;
 		}
 		return false;
+	}
+	
+	public boolean contains(Location loc){
+		return contains(loc.getWorld(),loc.getBlockX(), loc.getBlockY(),loc.getBlockZ());
 	}
 	
 	public String getFlags(){

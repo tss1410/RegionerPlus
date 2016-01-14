@@ -8,10 +8,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 import me.tss1410.RegionerPlus.CuboidSelection;
 import me.tss1410.RegionerPlus.RegionerPlus;
 import me.tss1410.RegionerPlus.player.Player;
+import me.tss1410.RegionerPlus.region.Region;
 
 public class PlayerListener implements Listener{
 	
@@ -62,5 +64,30 @@ public class PlayerListener implements Listener{
 			}
 		}
 
+	}
+	
+	@EventHandler
+	public void onPlayerMove(PlayerMoveEvent e){
+		if(e.getFrom().getBlockX() == e.getTo().getBlockX() && e.getFrom().getBlockY() == e.getTo().getBlockY() && e.getFrom().getBlockZ() == e.getTo().getBlockZ()){
+			return;
+		}
+		if(e.getPlayer().hasPermission("rp.bypass.entry")){
+			return;
+		}
+		for(Region r : pl.regions){
+			if(r.contains(e.getPlayer().getLocation())){
+				if(r.owner.equalsIgnoreCase(e.getPlayer().getUniqueId().toString())){
+					return;
+				}
+				
+				if(r.members.contains(e.getPlayer().getUniqueId().toString())){
+					return;
+				}
+				e.setCancelled(true);
+				e.getPlayer().sendMessage(ChatColor.RED + "Du har ikke tilgang til dette området!");
+				
+				e.getPlayer().teleport(e.getFrom());
+			}
+		}
 	}
 }
