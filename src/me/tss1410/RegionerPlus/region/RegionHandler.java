@@ -74,10 +74,10 @@ public class RegionHandler {
     public void addMembers(RegionerPlus pl){
     	for(Region r : pl.regions){
     		try {
-				pl.getregions.setString(1, r.name);
-				ResultSet rs = pl.getregions.executeQuery();
+				pl.getmembers.setString(1, r.name);
+				ResultSet rs = pl.getmembers.executeQuery();
 				while(rs.next()){
-					r.members.add(rs.getString("uuid"));
+					r.members.add(rs.getString(1));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

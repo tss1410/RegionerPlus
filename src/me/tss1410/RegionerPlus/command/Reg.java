@@ -80,22 +80,23 @@ public class Reg implements CommandExecutor{
 
 		} else if(args.length == 3){
 			if(args[0].equalsIgnoreCase("ny")){
+				
 				if(!Sender.hasPermission("rp.ny")){
 					Sender.sendMessage(pl.noPerm);
 					return false;
 				}
 				
-				if(pl.nameUuid.get(args[2]).equals(null)){
+				if(pl.nameUuid.get(args[2]) == null){
 					Sender.sendMessage(ChatColor.RED + "Kan ikke finne spilleren: " + args[2]);
 					return false;
 				}
 				
-				if(pl.selections.get(p.getUniqueId().toString()).getLocMax().equals(null)){
+				if(pl.selections.get(p.getUniqueId().toString()).getLocMax() == null){
 					p.sendMessage(ChatColor.RED + "Du må sette posisjon 1");
 					return false;
 				}
 				
-				if(pl.selections.get(p.getUniqueId().toString()).getLocMin().equals(null)){
+				if(pl.selections.get(p.getUniqueId().toString()).getLocMin() == null){
 					p.sendMessage(ChatColor.RED + "Du må sette posisjon 2");
 					return false;
 					
@@ -113,14 +114,14 @@ public class Reg implements CommandExecutor{
 				int xmin = Math.min(c.getLocMin().getBlockX(), c.getLocMax().getBlockX());
 				int xmax = Math.max(c.getLocMin().getBlockX(), c.getLocMax().getBlockX());
 				int zmin = Math.min(c.getLocMin().getBlockZ(), c.getLocMax().getBlockZ());
-				int zmax = Math.min(c.getLocMin().getBlockZ(), c.getLocMax().getBlockZ());
+				int zmax = Math.max(c.getLocMin().getBlockZ(), c.getLocMax().getBlockZ());
 				int ymin = Math.min(c.getLocMin().getBlockY(), c.getLocMax().getBlockY());
-				int ymax = Math.min(c.getLocMin().getBlockY(), c.getLocMax().getBlockY());
+				int ymax = Math.max(c.getLocMin().getBlockY(), c.getLocMax().getBlockY());
 				
 				Region region = new Region(args[1], pl.nameUuid.get(args[2]), c.getLocMax().getWorld().getName(), xmin, xmax, ymin, ymax, zmin, zmax);
 				pl.regions.add(region);
 				region.insert(pl);
-				Sender.sendMessage(ChatColor.GOLD + "Region laget med navn: " + ChatColor.GRAY + region.name + ChatColor.GOLD + " og eier: " + ChatColor.GRAY + pl.nameUuid.get(region.owner));
+				Sender.sendMessage(ChatColor.GOLD + "Region laget med navn: " + ChatColor.GRAY + region.name + ChatColor.GOLD + " og eier: " + ChatColor.GRAY + pl.players.get(region.owner).name);
 				
 			}
 		}

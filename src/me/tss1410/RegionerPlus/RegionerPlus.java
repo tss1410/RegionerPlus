@@ -62,7 +62,7 @@ public class RegionerPlus extends JavaPlugin{
 		}
 		
 		try {
-			sql.getConnection().createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `rp_regions` (`name` VARCHAR(255), `owner` VARCHAR(255) PRIMARY KEY, `xmin` INT, `ymin` INT, `zmin` INT, `xmax` INT, `ymax` INT, `zmax` INT, `explode` TINYINT DEFAULT 0, `pvp` TINYINT DEFAULT 0, `entry` TINYINT DEFAULT 1, `build` TINYINT DEFAULT 0, `joinmessage` VARCHAR(255), `leavemessage` VARCHAR(255))");
+			sql.getConnection().createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `rp_regions` (`name` VARCHAR(255), `owner` VARCHAR(255) PRIMARY KEY, `world` VARCHAR(255), `xmin` INT, `ymin` INT, `zmin` INT, `xmax` INT, `ymax` INT, `zmax` INT, `explode` TINYINT DEFAULT 0, `pvp` TINYINT DEFAULT 0, `entry` TINYINT DEFAULT 1, `build` TINYINT DEFAULT 0, `joinmessage` VARCHAR(255), `leavemessage` VARCHAR(255))");
 			sql.getConnection().createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `rp_players` (`name` VARCHAR(255), `uuid` VARCHAR(255))");
 	        sql.getConnection().createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `rp_members` (`name` VARCHAR(255), `uuid` VARCHAR(255))");
 
@@ -82,7 +82,7 @@ public class RegionerPlus extends JavaPlugin{
 			getregions = sql.getConnection().prepareStatement("SELECT * FROM `rp_regions`");
 			getplayers = sql.getConnection().prepareStatement("SELECT * FROM `rp_players`");
 			
-			getmembers = sql.getConnection().prepareStatement("SELECT * FROM `rp_members` WHERE `name`=?");
+			getmembers = sql.getConnection().prepareStatement("SELECT uuid FROM `rp_members` WHERE `name`=?");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
