@@ -1,3 +1,7 @@
 name: RegionerPlus
-version: 1.0
+version: 2.0
+Author: tss1410
 main: me.tss1410.RegionerPlus.RegionerPlus
+commands:
+  reg:
+    description: Region kommandoer

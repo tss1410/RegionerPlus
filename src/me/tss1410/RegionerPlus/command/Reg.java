@@ -85,7 +85,7 @@ public class Reg implements CommandExecutor{
 					return false;
 				}
 				
-				if(!pl.players.values().contains(args[2])){
+				if(pl.nameUuid.get(args[2]) == null){
 					Sender.sendMessage(ChatColor.RED + "Kan ikke finne spilleren: " + args[2]);
 					return false;
 				}
@@ -105,7 +105,7 @@ public class Reg implements CommandExecutor{
 				
 				CuboidSelection c = pl.selections.get(p.getUniqueId().toString());
 				
-				if(c.getLocMax().getWorld().getName().equalsIgnoreCase(c.getLocMin().getWorld().getName())){
+				if(!c.getLocMax().getWorld().getName().equalsIgnoreCase(c.getLocMin().getWorld().getName())){
 					Sender.sendMessage(ChatColor.RED + "Posisjon 1 og 2 er i forskjellig verden");
 					return false;
 				}
@@ -120,6 +120,7 @@ public class Reg implements CommandExecutor{
 				Region region = new Region(args[1], pl.nameUuid.get(args[2]), c.getLocMax().getWorld().getName(), xmin, xmax, ymin, ymax, zmin, zmax);
 				pl.regions.add(region);
 				region.insert(pl);
+				Sender.sendMessage(ChatColor.GOLD + "Region laget med navn: " + ChatColor.GRAY + region.name + ChatColor.GOLD + " og eier: " + ChatColor.GRAY + pl.nameUuid.get(region.owner));
 				
 			}
 		}

@@ -44,6 +44,26 @@ public class Region {
 		members.add(owner);
 	}
 	
+	public Region(String name, String owner, String world, int xmin, int xmax, int ymin , int ymax, int zmin, int zmax, boolean pvp, boolean build, boolean explode, boolean entry, String joinMessage, String leaveMessage){
+		this.name = name;
+		this.owner = owner;
+		this.world = world;
+		
+		this.xmin = xmin; this.xmax = xmax;
+		this.ymin = ymin; this.ymax = ymax;
+		this.zmin = zmin; this.zmax = zmax;
+		
+		this.pvp = pvp;
+		this.explode = explode;
+		this.build = build;
+		this.entry = entry;
+		
+		this.joinMessage = joinMessage;
+		this.leaveMessage = leaveMessage;
+		
+		members.add(owner);
+	}
+	
 	
 	public void insert(RegionerPlus pl){
 
@@ -99,7 +119,7 @@ public class Region {
 		if(!w.getName().equalsIgnoreCase(world)){
 			return false;
 		}
-		if(x > xmin && x < xmax && y > ymin && y < ymax && z > zmin && z < zmax){
+		if(x >= xmin && x <= xmax && y >= ymin && y <= ymax && z >= zmin && z <= zmax){
 			return true;
 		}
 		return false;

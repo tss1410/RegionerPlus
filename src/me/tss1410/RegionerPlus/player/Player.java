@@ -16,8 +16,8 @@ public class Player {
 
 	public void insert(RegionerPlus pl){
 		try{
-			pl.newplayer.setString(1, uuid);
-			pl.newplayer.setString(2, name);
+			pl.newplayer.setString(1, name);
+			pl.newplayer.setString(2, uuid);
 			pl.newplayer.executeUpdate();
 		} catch(SQLException e){
 			e.printStackTrace();
