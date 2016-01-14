@@ -68,9 +68,9 @@ public class PlayerListener implements Listener{
 	
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e){
-		if(e.getFrom().getBlockX() == e.getTo().getBlockX() && e.getFrom().getBlockY() == e.getTo().getBlockY() && e.getFrom().getBlockZ() == e.getTo().getBlockZ()){
-			return;
-		}
+//		if(e.getFrom().getBlockX() == e.getTo().getBlockX() && e.getFrom().getBlockY() == e.getTo().getBlockY() && e.getFrom().getBlockZ() == e.getTo().getBlockZ()){
+//			return;
+//		}
 		if(e.getPlayer().hasPermission("rp.bypass.entry")){
 			return;
 		}
@@ -83,10 +83,10 @@ public class PlayerListener implements Listener{
 				if(r.members.contains(e.getPlayer().getUniqueId().toString())){
 					return;
 				}
+				
 				e.setCancelled(true);
 				e.getPlayer().sendMessage(ChatColor.RED + "Du har ikke tilgang til dette området!");
-				
-				e.getPlayer().teleport(e.getFrom());
+				e.getPlayer().teleport(e.getFrom().getBlock().getLocation());
 			}
 		}
 	}
