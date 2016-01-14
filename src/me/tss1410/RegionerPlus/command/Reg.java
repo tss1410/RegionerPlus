@@ -85,17 +85,17 @@ public class Reg implements CommandExecutor{
 					return false;
 				}
 				
-				if(pl.nameUuid.get(args[2]) == null){
+				if(pl.nameUuid.get(args[2]).equals(null)){
 					Sender.sendMessage(ChatColor.RED + "Kan ikke finne spilleren: " + args[2]);
 					return false;
 				}
 				
-				if(pl.selections.get(p.getUniqueId().toString()).getLocMax() == null){
+				if(pl.selections.get(p.getUniqueId().toString()).getLocMax().equals(null)){
 					p.sendMessage(ChatColor.RED + "Du må sette posisjon 1");
 					return false;
 				}
 				
-				if(pl.selections.get(p.getUniqueId().toString()).getLocMin() == null){
+				if(pl.selections.get(p.getUniqueId().toString()).getLocMin().equals(null)){
 					p.sendMessage(ChatColor.RED + "Du må sette posisjon 2");
 					return false;
 					
