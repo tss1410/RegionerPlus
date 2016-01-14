@@ -1,5 +1,6 @@
 package me.tss1410.RegionerPlus.region;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
@@ -45,15 +46,53 @@ public class Region {
 	
 	
 	public void insert(RegionerPlus pl){
-		
+
+		try {
+			pl.newregion.setString(1, name);
+			pl.newregion.setString(2, owner);
+			pl.newregion.setString(3, world);
+			pl.newregion.setInt(4, xmin);
+			pl.newregion.setInt(5, xmax);
+			pl.newregion.setInt(6, ymin);
+			pl.newregion.setInt(7, ymax);
+			pl.newregion.setInt(8, zmin);
+			pl.newregion.setInt(9, zmax);
+			pl.newregion.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void update(RegionerPlus pl){
 		
+		try{
+			pl.updateregion.setString(1, world);
+			pl.updateregion.setInt(2, xmin);
+			pl.updateregion.setInt(3, xmax);
+			pl.updateregion.setInt(4, ymin);
+			pl.updateregion.setInt(5, ymax);
+			pl.updateregion.setInt(6, zmin);
+			pl.updateregion.setInt(7, zmax);
+			pl.updateregion.setBoolean(8, explode);
+			pl.updateregion.setBoolean(9, pvp);
+			pl.updateregion.setBoolean(10, entry);
+			pl.updateregion.setBoolean(11, build);
+			pl.updateregion.setString(12, joinMessage);
+			pl.updateregion.setString(13, leaveMessage);
+			pl.updateregion.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void delete(RegionerPlus pl){
-		
+		try {
+			pl.deleteregion.setString(1, name);
+			pl.deleteregion.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public boolean contains(World w, int x, int y, int z){
@@ -79,7 +118,7 @@ public class Region {
 	public String getMembers(RegionerPlus main) {
 		StringBuffer me = new StringBuffer();
 		for(String s : members){
-			me.append(main.uuidName.get(s) + ", ");
+			me.append(main.players.get(s).name + ", ");
 		}
 		me.delete(me.length() - 2, me.length());
 		return me.toString();

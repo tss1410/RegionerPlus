@@ -5,8 +5,11 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.tss1410.RegionerPlus.player.Player;
+import me.tss1410.RegionerPlus.player.PlayerHandler;
 import me.tss1410.RegionerPlus.region.Region;
 import me.tss1410.RegionerPlus.region.RegionHandler;
 
@@ -21,13 +24,21 @@ public class RegionerPlus extends JavaPlugin{
 	public PreparedStatement updateplayer;
 	public PreparedStatement deleteplayer;
 	
+	public PreparedStatement getregions;
+	public PreparedStatement getplayers;
+
 	public RegionHandler regionHandler;
 	
 	public MySQL sql;
 	public HashMap<String, CuboidSelection> selections = new HashMap<String, CuboidSelection>();
 	public HashSet<Region> regions = new HashSet<Region>();
 	
-	public HashMap<String, String> uuidName = new HashMap<String, String>(); //<UUID, Name>
+	public HashMap<String, Player> players = new HashMap<String, Player>(); //<UUID, Name>
+	public HashMap<String, String> nameUuid = new HashMap<String, String>();
+	
+	public PlayerHandler ph = new PlayerHandler();
+	
+	public String noPerm = ChatColor.RED + "Du har ikke tilgang til denne kommandoen";
 	
 	public void onEnable(){
 	}
@@ -47,16 +58,22 @@ public class RegionerPlus extends JavaPlugin{
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
+		
 		try {
-			newregion = sql.getConnection().prepareStatement("INSERT INTO `rp_regions` (name, owner, xmin, xmax, ymin, ymax, zmin, zmax) VALUES (?,?,?,?,?,?,?,?)");
-			updateregion = sql.getConnection().prepareStatement("UPDATE `rp_regions` SET `xmin`=?, `ymin`=?, `zmin`=?, `xmax`=?, `ymax`=?, `zmax`=?, `explode`=?, `pvp`=?, `entry`=?, `build`=?, `joinmessage`=?, `leavemessage`=? WHERE `name`");
+			newregion = sql.getConnection().prepareStatement("INSERT INTO `rp_regions` (name, owner, world, xmin, xmax, ymin, ymax, zmin, zmax) VALUES (?,?,?,?,?,?,?,?,?)");
+			updateregion = sql.getConnection().prepareStatement("UPDATE `rp_regions` SET `world`=?, `xmin`=?, `ymin`=?, `zmin`=?, `xmax`=?, `ymax`=?, `zmax`=?, `explode`=?, `pvp`=?, `entry`=?, `build`=?, `joinmessage`=?, `leavemessage`=? WHERE `name`");
 			deleteregion = sql.getConnection().prepareStatement("DELETE FROM `rp_regions` WHERE `name`=?");
 			
 			newplayer = sql.getConnection().prepareStatement("INSERT INTO `rp_players` (name, uuid) VALUES (?,?)");
 			updateplayer = sql.getConnection().prepareStatement("UPDATE `rp_players` SET `name`=? WHERE `uuid`=?");
 			deleteplayer = sql.getConnection().prepareStatement("DELETE FROM `rp_players` WHERE `uuid`=?");
+			
+			getregions = sql.getConnection().prepareStatement("SELECT * FROM `rp_regions`");
+			getplayers = sql.getConnection().prepareStatement("SELECT * FROM `rp_players`");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		ph.getFromSQL(this);
 	}
 }
